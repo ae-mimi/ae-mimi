@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cover Art A/B Tester & Analyzer</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="app-theme-dark">
+    <header class="app-header">
+      <div>
+        <p class="eyebrow">Professional Cover Art A/B Tester & Analyzer</p>
+        <h1>CoverIQ Studio</h1>
+        <p class="subhead">
+          Optimize album art across 11 streaming platforms with real-time previews, AI-grade analysis,
+          and client-ready reporting.
+        </p>
+      </div>
+      <div class="header-actions">
+        <button class="btn ghost" id="toggle-app-theme">Toggle App Theme</button>
+        <button class="btn primary">Start New Project</button>
+      </div>
+    </header>
+
+    <main>
+      <section class="card" id="input-section">
+        <div class="section-title">
+          <h2>Input & Validation</h2>
+          <p>Upload artwork and validate platform requirements in real time.</p>
+        </div>
+        <div class="grid two">
+          <div>
+            <div id="drop-zone" class="drop-zone">
+              <input type="file" id="file-input" accept="image/png,image/jpeg,image/webp" hidden />
+              <div class="drop-content">
+                <h3>Drop cover art here</h3>
+                <p>JPG, PNG, WebP · up to 10MB · 3000x3000px recommended</p>
+                <div class="drop-actions">
+                  <button class="btn primary" id="select-file">Select file</button>
+                  <button class="btn ghost" id="sample-art">Use sample</button>
+                </div>
+              </div>
+            </div>
+            <div class="field-row">
+              <label for="url-input">Or paste image URL</label>
+              <div class="input-with-button">
+                <input id="url-input" type="url" placeholder="https://" />
+                <button class="btn ghost" id="load-url">Load</button>
+              </div>
+            </div>
+            <div class="meta-grid">
+              <div>
+                <span class="meta-label">File size</span>
+                <strong id="meta-size">—</strong>
+              </div>
+              <div>
+                <span class="meta-label">Dimensions</span>
+                <strong id="meta-dimensions">—</strong>
+              </div>
+              <div>
+                <span class="meta-label">Format</span>
+                <strong id="meta-format">—</strong>
+              </div>
+              <div>
+                <span class="meta-label">Validation</span>
+                <strong id="meta-validation" class="badge neutral">Awaiting upload</strong>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="field-row">
+              <label for="title-input">Song / Album title</label>
+              <input id="title-input" type="text" placeholder="Enter title" value="Midnight Resonance" />
+            </div>
+            <div class="field-row">
+              <label for="artist-input">Artist name</label>
+              <input id="artist-input" type="text" placeholder="Enter artist" value="Aurelia Nova" />
+            </div>
+            <div class="field-row">
+              <label for="genre-input">Genre benchmark</label>
+              <select id="genre-input">
+                <option>Pop</option>
+                <option>Hip-Hop</option>
+                <option>Electronic</option>
+                <option>Indie</option>
+                <option>Latin</option>
+                <option>Jazz</option>
+              </select>
+            </div>
+            <div class="validation-panel">
+              <h3>Platform Requirements Checker</h3>
+              <ul id="validation-list"></ul>
+              <div class="note">
+                Recommended: 3000x3000px · sRGB · max 10MB · no borders
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="card" id="controls">
+        <div class="section-title">
+          <h2>Comparison Controls</h2>
+          <p>Compare platforms with synchronized device, theme, and player state modes.</p>
+        </div>
+        <div class="control-grid">
+          <div>
+            <label>Comparison layout</label>
+            <div class="segmented" id="layout-toggle">
+              <button class="seg-btn active" data-layout="grid">Grid (11 platforms)</button>
+              <button class="seg-btn" data-layout="compare">Side-by-side</button>
+            </div>
+          </div>
+          <div>
+            <label>Device view</label>
+            <div class="segmented" id="device-toggle">
+              <button class="seg-btn active" data-device="mobile">Mobile</button>
+              <button class="seg-btn" data-device="tablet">Tablet</button>
+              <button class="seg-btn" data-device="desktop">Desktop</button>
+            </div>
+          </div>
+          <div>
+            <label>Player state</label>
+            <div class="segmented" id="state-toggle">
+              <button class="seg-btn active" data-state="expanded">Now Playing</button>
+              <button class="seg-btn" data-state="collapsed">Collapsed</button>
+              <button class="seg-btn" data-state="lock">Lock Screen</button>
+              <button class="seg-btn" data-state="playlist">Playlist Grid</button>
+              <button class="seg-btn" data-state="search">Search Results</button>
+              <button class="seg-btn" data-state="hero">Album Hero</button>
+            </div>
+          </div>
+          <div>
+            <label>Theme control</label>
+            <div class="segmented" id="theme-toggle">
+              <button class="seg-btn active" data-theme="dark">Dark</button>
+              <button class="seg-btn" data-theme="light">Light</button>
+              <button class="seg-btn" data-theme="mixed">Mixed</button>
+            </div>
+          </div>
+        </div>
+        <div class="platform-select" id="platform-select"></div>
+      </section>
+
+      <section class="card" id="platform-grid">
+        <div class="section-title">
+          <h2>Streaming Platform Previews</h2>
+          <p>Accurate layout replicas with synchronized states and theme controls.</p>
+        </div>
+        <div id="platform-cards" class="platform-grid"></div>
+      </section>
+
+      <section class="card" id="single-view">
+        <div class="section-title">
+          <h2>Single Song View</h2>
+          <p>High-resolution focus with zoom, palette extraction, and typography contrast checks.</p>
+        </div>
+        <div class="grid two">
+          <div class="single-preview">
+            <div class="preview-frame">
+              <img id="single-image" src="" alt="Cover art preview" />
+              <div class="zoom-overlay">
+                <span>Zoom 200%</span>
+              </div>
+            </div>
+            <div class="zoom-controls">
+              <button class="btn ghost">-</button>
+              <input type="range" min="100" max="300" value="200" />
+              <button class="btn ghost">+</button>
+            </div>
+          </div>
+          <div>
+            <div class="palette" id="palette"></div>
+            <div class="palette-meta">
+              <div>
+                <h3>Suggested text color</h3>
+                <p id="text-color">#F5F5F5</p>
+              </div>
+              <div>
+                <h3>Dominant mood</h3>
+                <p id="mood">Moody · Cinematic · Midnight</p>
+              </div>
+            </div>
+            <div class="card-mini">
+              <h3>Accessibility checks</h3>
+              <ul>
+                <li>Contrast ratio: <strong id="contrast-score">4.6:1</strong></li>
+                <li>Color blindness: <strong>Pass</strong></li>
+                <li>Safe zone: <strong>92% compliant</strong></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="card" id="analysis">
+        <div class="section-title">
+          <h2>AI-Powered Analysis Engine</h2>
+          <p>Automated heuristic scoring with actionable insights by platform.</p>
+        </div>
+        <div class="analysis-grid">
+          <div class="score-card">
+            <h3>Overall Readiness</h3>
+            <div class="score" id="overall-score">84</div>
+            <p class="score-label">Improvement potential: 12%</p>
+          </div>
+          <div class="score-card">
+            <h3>Platform Grades</h3>
+            <div class="grade-grid" id="grade-grid"></div>
+          </div>
+          <div class="score-card">
+            <h3>AI Insights</h3>
+            <ul id="insights-list"></ul>
+          </div>
+        </div>
+        <div class="analysis-detail">
+          <div class="analysis-item">
+            <h4>Color Psychology</h4>
+            <p>Balanced warm/cool palette with strong emotional resonance for pop and indie audiences.</p>
+            <span class="badge">Score 87</span>
+          </div>
+          <div class="analysis-item">
+            <h4>Platform UI Contrast</h4>
+            <p>High separation in dark modes, minor clash with YouTube Music red accent.</p>
+            <span class="badge warning">Score 78</span>
+          </div>
+          <div class="analysis-item">
+            <h4>Legibility & Clarity</h4>
+            <p>Text remains readable down to 80px; reduce micro-detail for playlist thumbnails.</p>
+            <span class="badge">Score 82</span>
+          </div>
+          <div class="analysis-item">
+            <h4>Accessibility</h4>
+            <p>Passes WCAG AA with improvements suggested for protanopia contrast.</p>
+            <span class="badge">Score 90</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="card" id="batch">
+        <div class="section-title">
+          <h2>Batch Testing Mode</h2>
+          <p>Upload up to 10 variations, compare, and pick the winning artwork.</p>
+        </div>
+        <div class="batch-grid">
+          <div class="batch-upload">
+            <h3>Upload Variations</h3>
+            <p>Drag files here or import from saved project.</p>
+            <button class="btn ghost">Add Variations</button>
+          </div>
+          <div class="batch-results">
+            <h3>Variation Leaderboard</h3>
+            <table>
+              <thead>
+                <tr>
+                  <th>Version</th>
+                  <th>Overall</th>
+                  <th>Best Platform</th>
+                  <th>Recommendation</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>V1 · Midnight</td>
+                  <td>88</td>
+                  <td>Apple Music</td>
+                  <td><span class="badge">Winner</span></td>
+                </tr>
+                <tr>
+                  <td>V2 · Prism</td>
+                  <td>82</td>
+                  <td>Spotify</td>
+                  <td><span class="badge neutral">Runner-up</span></td>
+                </tr>
+                <tr>
+                  <td>V3 · Neon Bloom</td>
+                  <td>76</td>
+                  <td>Deezer</td>
+                  <td><span class="badge warning">Needs work</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section class="card" id="reports">
+        <div class="section-title">
+          <h2>Reporting & Export</h2>
+          <p>Export client-ready deliverables and optimized files for each platform.</p>
+        </div>
+        <div class="grid three">
+          <div class="report-card">
+            <h3>Visual Report</h3>
+            <ul>
+              <li>Screenshot gallery by platform</li>
+              <li>Score summary tables</li>
+              <li>Accessibility breakdown</li>
+            </ul>
+            <button class="btn primary">Export PDF</button>
+          </div>
+          <div class="report-card">
+            <h3>Batch Export</h3>
+            <ul>
+              <li>Auto-resize for 11 platforms</li>
+              <li>ZIP download with naming convention</li>
+              <li>Individual platform downloads</li>
+            </ul>
+            <button class="btn ghost">Download ZIP</button>
+          </div>
+          <div class="report-card">
+            <h3>Share & Collaborate</h3>
+            <ul>
+              <li>Shareable 7-day link</li>
+              <li>Annotations & comments</li>
+              <li>Approval workflow tracking</li>
+            </ul>
+            <button class="btn ghost">Generate Link</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="card" id="resources">
+        <div class="section-title">
+          <h2>Trends & Learning Resources</h2>
+          <p>Stay ahead with genre trends, platform guidelines, and best practices.</p>
+        </div>
+        <div class="grid two">
+          <div class="trend-card">
+            <h3>Trending Insights Dashboard</h3>
+            <ul>
+              <li>Top color palettes by genre</li>
+              <li>Platform-specific design trends</li>
+              <li>Competitive positioning estimates</li>
+            </ul>
+          </div>
+          <div class="trend-card">
+            <h3>Learning Resources</h3>
+            <ul>
+              <li>Best practices guide</li>
+              <li>Case studies of successful cover art</li>
+              <li>Embedded tutorial videos</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="app-footer">
+      <div>
+        <strong>CoverIQ Studio</strong>
+        <p>Client-ready cover art testing with privacy-first, fully client-side processing.</p>
+      </div>
+      <div class="footer-actions">
+        <button class="btn ghost">Keyboard Shortcuts</button>
+        <button class="btn ghost">High Contrast Mode</button>
+      </div>
+    </footer>
+
+    <script src="app.js"></script>
+  </body>
+</html>
