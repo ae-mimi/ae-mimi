@@ -66,13 +66,12 @@ A modern, responsive brand website built with Astro and Tailwind CSS. The projec
 
 ---
 
-### WEFT
-A fashion-tech product concept designed to help fashion designers manage technical fashion documentation, client measurements, specifications, and bespoke garment workflows.
+### Imperial Hills Website
+A professional business website project for Imperial Hills, focused on presenting services, building credibility, and giving the brand a clean digital presence.
 
-**Focus:** Fashion tech, product thinking, documentation, design systems
+**Focus:** Business website, responsive design, client project, brand presentation
 
-[View documentation](https://github.com/ae-mimi/WEFT-Documentation)  
-[View app repository](https://github.com/ae-mimi/weft-app)
+[View repository](https://github.com/ae-mimi/imperial-hills-website)
 
 ---
 
@@ -107,8 +106,8 @@ An e-commerce website experiment built with Astro, focused on modern static-site
 
 - Improving my front-end portfolio with polished, production-ready projects
 - Building data science projects that connect analysis with real cultural and business questions
-- Exploring fashion-tech tools for designers and small creative businesses
-- Creating digital systems for brands, artists, and entrepreneurs
+- Creating responsive websites for brands, artists, and small businesses
+- Exploring digital systems that support creative entrepreneurs and growing businesses
 
 ---
 
