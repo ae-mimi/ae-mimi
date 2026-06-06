@@ -111,15 +111,16 @@ An e-commerce website experiment built with Astro, focused on modern static-site
 
 ---
 
-## GitHub stats
+## GitHub focus
 
-<p align="center">
-  <img src="https://github-readme-stats.vercel.app/api?username=ae-mimi&show_icons=true&theme=default&hide_border=true" alt="Miracle's GitHub stats" />
-</p>
+My repositories reflect a mix of frontend development, creative web projects, business websites, and data-focused experiments.
 
-<p align="center">
-  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=ae-mimi&layout=compact&theme=default&hide_border=true" alt="Top languages" />
-</p>
+Current focus areas:
+
+- Building responsive websites with clean UI structure
+- Creating digital platforms for brands, artists, and small businesses
+- Strengthening my data science and analytics portfolio
+- Improving accessibility, performance, and maintainable frontend code
 
 ---
 
